@@ -1,6 +1,7 @@
 # Gilon Kraft
 # LETREP26 - Software Subteam
 # Date Started: 11/14/2025
+# Modified for serial communication
 
 """This program implements the Delsys API
 First, it establishes a connection with the EMG sensors"""
@@ -14,6 +15,7 @@ import pandas as pd
 # Import the *correct* class names
 from AeroPy.DataManager import DataKernel  # <-- FIX 1: The class is DataKernel
 from AeroPy.TrignoBase import TrignoBase
+from serial_comm_Win import SerialComm  # Import serial module
 
 # --- This is the correct 3-step setup ---
 
