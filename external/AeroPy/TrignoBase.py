@@ -1,24 +1,51 @@
 """
 This class creates an instance of the Trigno base. Put your key and license here.
 """
-import threading
+import os
+import sys
 import time
-from pythonnet import load
 from enum import Enum
 from dataclasses import dataclass
+from external.Export.CsvWriter import CsvWriter  # <--- ADD THIS
+from pythonnet import load
 
-from Export.CsvWriter import CsvWriter
-
+# 1. The runtime MUST be loaded BEFORE importing clr!
 load("coreclr")
 import clr
 
-clr.AddReference("resources\DelsysAPI")
-clr.AddReference("System.Collections")
+# Absolute pathing for OneDrive environments
+current_file = os.path.abspath(__file__)
+
+# Go 2 levels up to the 'external' folder (external/AeroPy/TrignoBase.py -> external)
+external_dir = os.path.dirname(os.path.dirname(current_file))
+resources_path = os.path.join(external_dir, "resources")
+dll_path = os.path.join(resources_path, "DelsysAPI.dll")
+
+if not os.path.exists(dll_path):
+    print(f"ERROR: DLL not found at {dll_path}")
+else:
+    try:
+        # 1. Add the resources folder to Python's system path
+        if resources_path not in sys.path:
+            sys.path.append(resources_path)
+            
+        # 2. Reference the Assembly by name (NO .dll extension!)
+        clr.AddReference("DelsysAPI")
+        clr.AddReference("System.Collections")
+        print("Successfully loaded DelsysAPI from absolute path.")
+    except Exception as e:
+        print(f"Failed to load assembly. This often means a dependency (like VC++ Redist) is missing.")
+        print(f"Error: {e}")
+
+# Fix the local import path for AeroPy
+aero_dir = os.path.dirname(current_file)
+if aero_dir not in sys.path:
+    sys.path.append(aero_dir)
 
 from Aero import AeroPy
 
-key = ""
-license = ""
+key = "MIIBKjCB4wYHKoZIzj0CATCB1wIBATAsBgcqhkjOPQEBAiEA/////wAAAAEAAAAAAAAAAAAAAAD///////////////8wWwQg/////wAAAAEAAAAAAAAAAAAAAAD///////////////wEIFrGNdiqOpPns+u9VXaYhrxlHQawzFOw9jvOPD4n0mBLAxUAxJ02CIbnBJNqZnjhE50mt4GffpAEIQNrF9Hy4SxCR/i85uVjpEDydwN9gS3rM6D0oTlF2JjClgIhAP////8AAAAA//////////+85vqtpxeehPO5ysL8YyVRAgEBA0IABCRsXZ/OFROuXrwGn8emkEHjHK8bKi0HdKiFbCgIvDlRg5LmviHuwG/aBYdKSEbdA4laDQeniqN1nyF5gSKteLk="
+license = "<License>  <Id>02a8ac68-48c6-45a4-b064-da832c717f19</Id>  <Type>Standard</Type>  <Quantity>10</Quantity>  <LicenseAttributes>    <Attribute name='Software'></Attribute>  </LicenseAttributes>  <ProductFeatures>    <Feature name='Sales'>True</Feature>    <Feature name='Billing'>False</Feature>  </ProductFeatures>  <Customer>    <Name>Gilon Kraft</Name>    <Email>gilonkraft@letu.edu</Email>  </Customer>  <Expiration>Sat, 22 Sep 2035 04:00:00 GMT</Expiration>  <Signature>MEQCIHON0yqf6rEgzNf4bZMVOFeFu480zVyv30xSWFHPCwGNAiB42+DQqhk33k9yHv3vfmT6ZxYVpqDcDSqA6S9cmC/vpQ==</Signature></License>"
 
 class TrignoType(Enum):
     LITE = 0
