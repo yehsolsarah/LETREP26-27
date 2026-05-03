@@ -1,0 +1,4 @@
+EMG,Force
+samples,timestamp_us
+time,force_V
+value,0

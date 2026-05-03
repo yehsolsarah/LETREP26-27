@@ -1,0 +1,51 @@
+LETREP25-26
+	-Correlation_GUI
+		-Participants
+			-(participant trials)
+		-__pycache__
+		-Participant_manager.py
+		-delsys_reader.py
+		-Themes.py
+		-ReflexTest.py (basic corelation GUI)
+		-login_popup.py
+		-main.py (main corelation program)
+	-external (programs not used on Pi)
+		-resources
+		-__pycache__
+		-AeroPy
+		-Export
+		-Motor_suggesed.cpp
+		-delsys_api_server.py (windows server code)
+		-Motor_annotated.cpp (annotated version of Motor_suggested.cpp)
+	-Rehab_GUI
+		-analysis_tests (unused analysis programs)
+			-__pycache__
+			-Data_ann.py
+			-EMG_SpecAnn.py
+			-new_data_ann.py
+			-new_session_manager.py
+			-plotter_ann.py
+			-session_manager.py
+		-analysis
+			-__pycache__
+			-__init__.py
+			-plotter.py
+			-processors.py
+			-session_logic.py
+		-toolbox
+			-__pycache__
+			-__init.py__
+			-delsys_api_clientGUI.py
+			-parameter_tester.py
+			-login_popup.py
+			-readSerial.py
+			-read_serial_v2.py
+			-delsys_api_client.py
+			-theme.py
+			-participant_manager.py
+		-__pycache__
+		-Participant_Data
+		-LETREP GUI.py (windows GUI [old])
+		-PIGUI.py (main Rehab GUI)
+	-LICENSE
+	-Directory
